@@ -17,8 +17,9 @@ pipeline {
                         }
                         steps {
                             // Correct the login command and ensure login happens before push
-                            bat "echo ${DOCKER_HUB_CREDS_PSW} | docker login -u ${DOCKER_HUB_CREDS_USR} --password-stdin"
+                            bat 'echo %DOCKER_HUB_PSW% | docker login -u %DOCKER_HUB_USR% --password-stdin'
                             bat "docker push emracdocker/selenium"
+
                         }
         }
     }
