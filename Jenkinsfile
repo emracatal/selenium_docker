@@ -12,18 +12,19 @@ pipeline {
             }
         }
         stage("Push Image") {
-            environment {
-                DOCKER_HUB_CREDS = credentials('dockerhub-creds') // store credentials as a variable
-            }
-            steps {
-                bat "docker push emracdocker/selenium"
-                echo %DOCKER_HUB_PSW% | docker login -u %DOCKER_HUB_USR% --password-stdin
-            }
+             environment {
+                            DOCKER_HUB_CREDS = credentials('dockerhub-creds') // store credentials as a variable
+                        }
+                        steps {
+                            // Correct the login command and ensure login happens before push
+                            bat "echo ${DOCKER_HUB_CREDS_PSW} | docker login -u ${DOCKER_HUB_CREDS_USR} --password-stdin"
+                            bat "docker push emracdocker/selenium"
+                        }
         }
     }
     post {
         always {
-            bat "docker logout"
-        }
+                    bat "docker logout"
+                }
     }
 }
