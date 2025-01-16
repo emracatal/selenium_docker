@@ -16,9 +16,10 @@ pipeline {
                 DOCKER_HUB_CREDS = credentials('dockerhub-creds') // store credentials as a variable
             }
             steps {
-                // Correct login command using the default environment variables
-                bat "echo ${DOCKER_HUB_CREDS_USR} | docker login -u ${DOCKER_HUB_CREDS_USR} --password-stdin"
-                bat "docker push emracdocker/selenium"
+                bat 'echo ${DOCKER_HUB_PSW} | docker login -u ${DOCKER_HUB_USR} --password-stdin'
+                bat 'docker push vinsdocker/selenium:latest'
+                bat "docker tag vinsdocker/selenium:latest vinsdocker/selenium:${env.BUILD_NUMBER}"
+                bat "docker push vinsdocker/selenium:${env.BUILD_NUMBER}"
             }
         }
     }
