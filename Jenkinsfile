@@ -16,7 +16,8 @@ pipeline {
                 DOCKER_HUB = credentials('dockerhub-creds')
             }
             steps {
-                bat 'docker login -u ${DOCKER_HUB_USR} -p ${DOCKER_HUB_PSW}'
+                bat "echo ${DOCKER_HUB_CREDS_USR} | docker login -u ${DOCKER_HUB_CREDS_USR} --password-stdin"
+                //bat 'docker login -u ${DOCKER_HUB_USR} -p ${DOCKER_HUB_PSW}'
                 bat "docker push emracdocker/selenium"
             }
         }
