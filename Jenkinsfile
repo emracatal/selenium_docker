@@ -17,9 +17,9 @@ pipeline {
             }
             steps {
                 bat 'echo ${DOCKER_HUB_PSW} | docker login -u ${DOCKER_HUB_USR} --password-stdin'
-                bat 'docker push vinsdocker/selenium:latest'
-                bat "docker tag vinsdocker/selenium:latest vinsdocker/selenium:${env.BUILD_NUMBER}"
-                bat "docker push vinsdocker/selenium:${env.BUILD_NUMBER}"
+                bat 'docker push emracdocker/selenium:latest'
+                bat "docker tag emracdocker/selenium:latest vinsdocker/selenium:${env.BUILD_NUMBER}"
+                bat "docker push emracdocker/selenium:${env.BUILD_NUMBER}"
             }
         }
     }
