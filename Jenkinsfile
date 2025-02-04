@@ -1,26 +1,20 @@
 pipeline{
     agent any
     stages{
-           stage("stage-1"){
+           stage("Build Jar"){
                 steps{
-                    echo "doing mvn clean"
-                    echo "doing mvn package"
+                    bat "mvn clean package -DskipTests"
                 }
            }
-           stage("stage-2"){
+           stage("Build Image"){
                  steps{
-                     echo "building docker image"
-                     }
+                     bat "docker build -t=emracdocker/selenium ."
                  }
-           stage("stage-3"){
+           }
+           stage("Push Image"){
                  steps{
-                      echo "pushing docker image"
+                      bat "docker push emracdocker/selenium"
                       }
-                }
-    }
-    post{
-        always{
-            echo "doing clean up"
-        }
+           }
     }
 }
