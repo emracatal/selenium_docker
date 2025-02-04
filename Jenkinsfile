@@ -8,13 +8,23 @@ pipeline{
            }
            stage("Build Image"){
                  steps{
-                     bat "docker build -t=emracdocker/selenium ."
+                     bat "docker build -t=emracatal/selenium ."
                  }
            }
            stage("Push Image"){
+                 environment{
+                       DOCKER_HUB = credentials('dockerhub-creds')
+                 }
                  steps{
-                      bat "docker push emracdocker/selenium"
-                      }
+                      bat 'docker login -u %DOCKER_HUB_USR% -p %DOCKER_HUB_PSW%'
+                      bat "docker push emracatal/selenium"
+                 }
            }
+    }
+
+    post{
+        always{
+            bat "docker logout"
+        }
     }
 }
